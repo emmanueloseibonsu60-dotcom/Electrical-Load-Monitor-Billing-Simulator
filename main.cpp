@@ -56,12 +56,35 @@ void viewAppliances() {
 }
 
 
+// Search appliance
+void searchAppliance() {
+    string search;
+    cout << "Enter appliance name to search: ";
+    getline(cin, search);
+
+    bool found = false;
+
+    for (int i = 0; i < appliances.size(); i++) {
+        if (appliances[i].name.find(search) != string::npos) {
+            cout << appliances[i].name << " | "
+                 << appliances[i].watts << "W | "
+                 << appliances[i].hours << " hrs\n";
+            found = true;
+        }
+    }
+
+    if (!found)
+        cout << "Appliance not found.\n";
+}
+
+
 // Menu
 void showMenu() {
     cout << "\n===== Electrical Load Monitoring System =====\n";
     cout << "1. Register Appliance\n";
     cout << "2. View Appliances\n";
-    cout << "3. Exit\n";
+    cout << "3. Search Appliance\n";
+    cout << "4. Exit\n";
     cout << "Choose option: ";
 }
 
@@ -78,7 +101,8 @@ int main() {
         switch (choice) {
             case 1: registerAppliance(); break;
             case 2: viewAppliances(); break;
-            case 3:
+            case 3: searchAppliance(); break;
+            case 4:
                 cout << "Goodbye!\n";
                 return 0;
             default:
