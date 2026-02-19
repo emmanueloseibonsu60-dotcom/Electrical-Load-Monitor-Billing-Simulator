@@ -12,7 +12,6 @@ struct Appliance {
 
 vector<Appliance> appliances;
 
-// Register new appliance
 void registerAppliance() {
     Appliance a;
 
@@ -27,12 +26,9 @@ void registerAppliance() {
     cin.ignore();
 
     appliances.push_back(a);
-
     cout << "Appliance added successfully.\n";
 }
 
-
-// View appliances
 void viewAppliances() {
     if (appliances.empty()) {
         cout << "No appliances registered.\n";
@@ -55,8 +51,6 @@ void viewAppliances() {
     }
 }
 
-
-// Search appliance
 void searchAppliance() {
     string search;
     cout << "Enter appliance name to search: ";
@@ -77,17 +71,40 @@ void searchAppliance() {
         cout << "Appliance not found.\n";
 }
 
+void calculateBill() {
+    if (appliances.empty()) {
+        cout << "No appliances available.\n";
+        return;
+    }
 
-// Menu
+    double tariff;
+    cout << "Enter tariff per kWh: ";
+    cin >> tariff;
+    cin.ignore();
+
+    double totalKwh = 0;
+
+    for (int i = 0; i < appliances.size(); i++) {
+        totalKwh += (appliances[i].watts / 1000) * appliances[i].hours;
+    }
+
+    double dailyCost = totalKwh * tariff;
+    double monthlyCost = dailyCost * 30;
+
+    cout << "\nTotal Daily Energy: " << totalKwh << " kWh\n";
+    cout << "Daily Cost: " << dailyCost << endl;
+    cout << "Estimated Monthly Cost (30 days): " << monthlyCost << endl;
+}
+
 void showMenu() {
     cout << "\n===== Electrical Load Monitoring System =====\n";
     cout << "1. Register Appliance\n";
     cout << "2. View Appliances\n";
     cout << "3. Search Appliance\n";
-    cout << "4. Exit\n";
+    cout << "4. Calculate Bill\n";
+    cout << "5. Exit\n";
     cout << "Choose option: ";
 }
-
 
 int main() {
 
@@ -102,7 +119,8 @@ int main() {
             case 1: registerAppliance(); break;
             case 2: viewAppliances(); break;
             case 3: searchAppliance(); break;
-            case 4:
+            case 4: calculateBill(); break;
+            case 5:
                 cout << "Goodbye!\n";
                 return 0;
             default:
