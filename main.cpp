@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <iomanip>
-
 using namespace std;
 
 struct Appliance {
@@ -14,6 +13,7 @@ vector<Appliance> appliances;
 
 void registerAppliance() {
     Appliance a;
+    cin.ignore();
 
     cout << "Appliance name: ";
     getline(cin, a.name);
@@ -23,9 +23,9 @@ void registerAppliance() {
 
     cout << "Hours used per day: ";
     cin >> a.hours;
-    cin.ignore();
 
     appliances.push_back(a);
+
     cout << "Appliance added successfully.\n";
 }
 
@@ -36,7 +36,6 @@ void viewAppliances() {
     }
 
     cout << fixed << setprecision(2);
-
     cout << "\n#  Name                Watts   Hours   kWh/day\n";
     cout << "------------------------------------------------\n";
 
@@ -52,6 +51,7 @@ void viewAppliances() {
 }
 
 void searchAppliance() {
+    cin.ignore();
     string search;
     cout << "Enter appliance name to search: ";
     getline(cin, search);
@@ -60,9 +60,13 @@ void searchAppliance() {
 
     for (int i = 0; i < appliances.size(); i++) {
         if (appliances[i].name.find(search) != string::npos) {
+            double kwh = (appliances[i].watts / 1000) * appliances[i].hours;
+
             cout << appliances[i].name << " | "
                  << appliances[i].watts << "W | "
-                 << appliances[i].hours << " hrs\n";
+                 << appliances[i].hours << " hrs | "
+                 << kwh << " kWh/day\n";
+
             found = true;
         }
     }
@@ -71,60 +75,33 @@ void searchAppliance() {
         cout << "Appliance not found.\n";
 }
 
-void calculateBill() {
-    if (appliances.empty()) {
-        cout << "No appliances available.\n";
-        return;
-    }
-
-    double tariff;
-    cout << "Enter tariff per kWh: ";
-    cin >> tariff;
-    cin.ignore();
-
-    double totalKwh = 0;
-
-    for (int i = 0; i < appliances.size(); i++) {
-        totalKwh += (appliances[i].watts / 1000) * appliances[i].hours;
-    }
-
-    double dailyCost = totalKwh * tariff;
-    double monthlyCost = dailyCost * 30;
-
-    cout << "\nTotal Daily Energy: " << totalKwh << " kWh\n";
-    cout << "Daily Cost: " << dailyCost << endl;
-    cout << "Estimated Monthly Cost (30 days): " << monthlyCost << endl;
-}
-
 void showMenu() {
     cout << "\n===== Electrical Load Monitoring System =====\n";
     cout << "1. Register Appliance\n";
     cout << "2. View Appliances\n";
     cout << "3. Search Appliance\n";
     cout << "4. Calculate Bill\n";
-    cout << "5. Exit\n";
+    cout << "5. Save Appliances\n";
+    cout << "6. Exit\n";
     cout << "Choose option: ";
 }
 
 int main() {
-
     int choice;
 
     while (true) {
         showMenu();
         cin >> choice;
-        cin.ignore();
 
         switch (choice) {
             case 1: registerAppliance(); break;
             case 2: viewAppliances(); break;
             case 3: searchAppliance(); break;
-            case 4: calculateBill(); break;
-            case 5:
+            case 6:
                 cout << "Goodbye!\n";
                 return 0;
             default:
-                cout << "Invalid choice.\n";
+                cout << "Feature not implemented yet.\n";
         }
     }
 
