@@ -18,7 +18,7 @@ const string FILE_NAME = "appliances.txt";
 
 // Load appliances from file
 void loadFromFile() {
-    ifstream file(FILE_NAME);
+    ifstream file(FILE_NAME.c_str());
     if (!file) return;
 
     Appliance a;
@@ -236,4 +236,5 @@ int main() {
 
     return 0;
 }
+
 
