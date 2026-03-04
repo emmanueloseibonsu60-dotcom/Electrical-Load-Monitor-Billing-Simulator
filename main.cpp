@@ -36,7 +36,7 @@ void loadFromFile() {
 
 // Save appliances to file
 void saveToFile() {
-    ofstream file(FILE_NAME);
+    ofstream file(FILE_NAME.c_str());
 
     for (int i = 0; i < appliances.size(); i++) {
         file << appliances[i].name << "|"
@@ -236,3 +236,4 @@ int main() {
 
     return 0;
 }
+
